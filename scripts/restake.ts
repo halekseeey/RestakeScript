@@ -18,7 +18,7 @@ export async function restake({
   web3,
 }: RestakeParams): Promise<TransactionReceipt> {
   const account = web3.eth.accounts.privateKeyToAccount(privateKey);
-  web3.eth.accounts.wallet.add(account);
+  // web3.eth.accounts.wallet.add(account);
 
   const contract = new web3.eth.Contract(contractABI, contractAddress);
 

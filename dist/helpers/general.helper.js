@@ -97,7 +97,7 @@ var checkPrivateKeysValidity = function (privateKeys, web3, password, isDecrypte
 };
 exports.checkPrivateKeysValidity = checkPrivateKeysValidity;
 var checkRanges = function (min, max) {
-    return typeof min === "number" && typeof max === "number" && min < max;
+    return typeof min === "number" && typeof max === "number" && min <= max;
 };
 exports.checkRanges = checkRanges;
 var sleep = function (ms) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
@@ -105,7 +105,7 @@ var sleep = function (ms) { return __awaiter(void 0, void 0, void 0, function ()
 }); }); };
 exports.sleep = sleep;
 var getAbiByRelativePath = function (relativePath) {
-    return JSON.parse(fs.readFileSync(path.join(__dirname, relativePath), "utf-8"));
+    return JSON.parse(fs.readFileSync(path.join(path.resolve(), relativePath), "utf-8"));
 };
 exports.getAbiByRelativePath = getAbiByRelativePath;
 //# sourceMappingURL=general.helper.js.map

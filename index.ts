@@ -87,19 +87,19 @@ async function main(): Promise<void> {
         privateKey: privateKey,
         amountWei,
         contractAddress: CONTRACT_ADDRESS,
-        contractABI: getAbiByRelativePath("./abi/abi.json"),
+        contractABI: getAbiByRelativePath("abi/abi.json"),
         refCode: REF_CODE,
         web3,
       });
       console.log(
-        `Transaction successful for privateKey ${account.address}\n
-      hash: ${receipt.transactionHash}\n
+        `Transaction successful for account ${account.address}
+      hash: ${receipt.transactionHash}
       amount: ${amountWei} Wei
       delay: ${delay}\n`
       );
     } catch (error) {
       console.log(
-        `Restake ultimately failed for privateKey ${account.address} with amount ${amountWei}: ${error}\n`
+        `Restake ultimately failed for account ${account.address} with amount ${amountWei}: ${error}\n`
       );
     }
     await sleep(delay);

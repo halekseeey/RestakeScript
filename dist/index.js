@@ -103,17 +103,17 @@ function main() {
                             privateKey: privateKey,
                             amountWei: amountWei,
                             contractAddress: config_const_1.CONTRACT_ADDRESS,
-                            contractABI: (0, general_helper_1.getAbiByRelativePath)("./abi/abi.json"),
+                            contractABI: (0, general_helper_1.getAbiByRelativePath)("abi/abi.json"),
                             refCode: config_const_1.REF_CODE,
                             web3: web3,
                         })];
                 case 5:
                     receipt = _a.sent();
-                    console.log("Transaction successful for privateKey ".concat(account.address, "\n\n      hash: ").concat(receipt.transactionHash, "\n\n      amount: ").concat(amountWei, " Wei\n      delay: ").concat(delay, "\n"));
+                    console.log("Transaction successful for account ".concat(account.address, "\n      hash: ").concat(receipt.transactionHash, "\n      amount: ").concat(amountWei, " Wei\n      delay: ").concat(delay, "\n"));
                     return [3 /*break*/, 7];
                 case 6:
                     error_1 = _a.sent();
-                    console.log("Restake ultimately failed for privateKey ".concat(account.address, " with amount ").concat(amountWei, ": ").concat(error_1, "\n"));
+                    console.log("Restake ultimately failed for account ".concat(account.address, " with amount ").concat(amountWei, ": ").concat(error_1, "\n"));
                     return [3 /*break*/, 7];
                 case 7: return [4 /*yield*/, (0, general_helper_1.sleep)(delay)];
                 case 8:

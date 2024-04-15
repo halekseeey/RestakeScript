@@ -50,7 +50,6 @@ function restake(_a) {
             switch (_d.label) {
                 case 0:
                     account = web3.eth.accounts.privateKeyToAccount(privateKey);
-                    web3.eth.accounts.wallet.add(account);
                     contract = new web3.eth.Contract(contractABI, contractAddress);
                     _d.label = 1;
                 case 1:

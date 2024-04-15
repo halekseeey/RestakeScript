@@ -1,5 +1,5 @@
 import { randomInt } from "crypto";
-import Web3 from "web3";
+import Web3, { AbiItem } from "web3";
 import { decryptPrivateKey } from "./decrypt.helper";
 import * as fs from "fs";
 import * as path from "path";
@@ -44,14 +44,14 @@ export const checkPrivateKeysValidity = (
 };
 
 export const checkRanges = (min: number, max: number): boolean => {
-  return typeof min === "number" && typeof max === "number" && min < max;
+  return typeof min === "number" && typeof max === "number" && min <= max;
 };
 
 export const sleep = async (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-export const getAbiByRelativePath = (relativePath: string): string => {
+export const getAbiByRelativePath = (relativePath: string): AbiItem[] => {
   return JSON.parse(
-    fs.readFileSync(path.join(__dirname, relativePath), "utf-8")
+    fs.readFileSync(path.join(path.resolve(), relativePath), "utf-8")
   );
 };
