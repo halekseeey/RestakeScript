@@ -2,10 +2,9 @@
   "name": "restakerenzoeth",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "npm i && ts-node index.ts"
+    "start": "npx tsc && node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +17,9 @@
     "web3": "^4.7.0"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^20.12.7",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
 }

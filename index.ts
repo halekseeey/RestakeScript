@@ -27,14 +27,20 @@ const web3: Web3 = new Web3(new Web3.providers.HttpProvider(RPC_URLS[0]));
 
 async function main(): Promise<void> {
   if (!checkRanges(ETH_AMOUNT.MIN, ETH_AMOUNT.MAX)) {
-    console.log(`Invalid ETH_AMOUNT`);
+    console.log(`Invalid ETH_AMOUNT\n`);
+    return;
   }
 
   if (!checkRanges(DELAY.MIN, DELAY.MAX)) {
-    console.log(`Invalid DELAY`);
+    console.log(`Invalid DELAY\n`);
+    return;
   }
 
   let privateKeys: string[] = await importPrivateKeys();
+  if (privateKeys.length === 0) {
+    console.log("No wallets found\n");
+    return;
+  }
   privateKeys = checkPrivateKeysValidity(
     privateKeys,
     web3,
@@ -61,7 +67,7 @@ async function main(): Promise<void> {
     //переходим к след если баланс аккаунта не проходит лимит
     if (balance < ETH_AMOUNT.MAX) {
       console.log(
-        `Restake skiped for privateKey ${account.address} becuse not enough money`
+        `Restake skiped for privateKey ${account.address} becuse not enough money. Balance: ${balance}\n`
       );
       continue;
     }
@@ -89,15 +95,15 @@ async function main(): Promise<void> {
         `Transaction successful for privateKey ${account.address}\n
       hash: ${receipt.transactionHash}\n
       amount: ${amountWei} Wei
-      delay: ${delay}`
+      delay: ${delay}\n`
       );
     } catch (error) {
       console.log(
-        `Restake ultimately failed for privateKey ${account.address} with amount ${amountWei}: ${error}`
+        `Restake ultimately failed for privateKey ${account.address} with amount ${amountWei}: ${error}\n`
       );
     }
     await sleep(delay);
-    console.log(`${delay} ms delay is over`);
+    console.log(`${delay} ms delay is over\n`);
   }
 }
 

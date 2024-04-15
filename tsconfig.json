@@ -1,13 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "outDir": "./dist",
     "esModuleInterop": true,
+    "target": "es5",
+    "module": "commonjs",
     "strict": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+    "outDir": "dist",
+    "sourceMap": true
+  }
 }

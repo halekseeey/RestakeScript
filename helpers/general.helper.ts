@@ -37,7 +37,7 @@ export const checkPrivateKeysValidity = (
       const decryptKey = isDecrypted ? decryptPrivateKey(key, password) : key;
       return web3.eth.accounts.privateKeyToAccount(decryptKey);
     } catch (error) {
-      console.error(`Invalid private key: ${key}`);
+      console.error(`Invalid private key: ${key}. Error: ${error}`);
       return false;
     }
   });
