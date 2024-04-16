@@ -10,7 +10,7 @@ import {
   ETH_AMOUNT,
   DECRYPT_PASSWORD,
   IS_DECRYPTED,
-  DEPOZIT_CONTRACT_ADDRESS,
+  DEPOSIT_CONTRACT_ADDRESS,
 } from "./config.const";
 import {
   checkPrivateKeysValidity,
@@ -79,7 +79,7 @@ async function main(): Promise<void> {
         amountWei,
         contractAddress: CONTRACT_ADDRESS,
         contractABI: getAbiByRelativePath("abi/abi.json"),
-        depositAddress: DEPOZIT_CONTRACT_ADDRESS,
+        depositAddress: DEPOSIT_CONTRACT_ADDRESS,
         web3,
       });
       console.log(

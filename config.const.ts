@@ -20,7 +20,7 @@ export const SHUFFLE_WALLET: boolean = false; //необходимо ли пер
 export const CONTRACT_ADDRESS: string =
   "0x399f22ae52a18382a67542b3de9bed52b7b9a4ad";
 
-export const DEPOZIT_CONTRACT_ADDRESS: string =
+export const DEPOSIT_CONTRACT_ADDRESS: string =
   "0x2416092f143378750bb29b79eD961ab195CcEea5";
 
 export const REF_CODE: string = "rC1pA";

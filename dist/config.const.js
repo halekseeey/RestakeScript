@@ -8,7 +8,7 @@ exports.DELAY = { MIN: 30, MAX: 60 };
 exports.RPC_URLS = [
     "https://arb1.arbitrum.io/rpc",
     "https://arb1.arbitrum.io/rpc3",
-    "http://localhost:8545",
+    "http://localhost:85451",
 ];
 exports.SHUFFLE_WALLET = false; //необходимо ли перемешивать
 exports.CONTRACT_ADDRESS = "0x399f22ae52a18382a67542b3de9bed52b7b9a4ad";
