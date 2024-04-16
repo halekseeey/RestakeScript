@@ -1,11 +1,12 @@
 import Web3, { TransactionReceipt } from "web3";
+import { ETH_AMOUNT } from "../config.const";
 
 type RestakeParams = {
   privateKey: string;
   amountWei: string;
   contractAddress: string;
   contractABI: any;
-  refCode: string;
+  depositAddress: string;
   web3: Web3;
 };
 
@@ -14,16 +15,25 @@ export async function restake({
   amountWei,
   contractAddress,
   contractABI,
-  refCode,
+  depositAddress,
   web3,
 }: RestakeParams): Promise<TransactionReceipt> {
   const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+  const balance = await web3.eth.getBalance(account.address);
+
+  //переходим к след если баланс аккаунта не проходит лимит
+  if (balance < BigInt(amountWei)) {
+    throw `Restake skiped for privateKey ${account.address} becuse not enough money`;
+  }
   // web3.eth.accounts.wallet.add(account);
 
   const contract = new web3.eth.Contract(contractABI, contractAddress);
 
   try {
-    const restakeCall = await contract.methods.Deposit(amountWei, refCode);
+    const restakeCall = await contract.methods.deposit(
+      depositAddress,
+      amountWei
+    );
     const restakeGas = await restakeCall.estimateGas({
       from: account.address,
       value: amountWei,
@@ -57,7 +67,7 @@ export const attemptRestake = async ({
   amountWei,
   contractAddress,
   contractABI,
-  refCode,
+  depositAddress,
   web3,
 }: AttemptRestakeType): Promise<TransactionReceipt> => {
   web3.setProvider(new Web3.providers.HttpProvider(rpcUrls[currentRpcIndex]));
@@ -67,7 +77,7 @@ export const attemptRestake = async ({
       amountWei,
       contractAddress,
       contractABI,
-      refCode,
+      depositAddress,
       web3,
     });
     return receipt;
@@ -81,7 +91,7 @@ export const attemptRestake = async ({
         amountWei,
         contractAddress,
         contractABI,
-        refCode,
+        depositAddress,
         web3,
       });
     } else {

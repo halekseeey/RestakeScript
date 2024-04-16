@@ -48,7 +48,7 @@ var decrypt_helper_1 = require("./helpers/decrypt.helper");
 var web3 = new web3_1.default(new web3_1.default.providers.HttpProvider(config_const_1.RPC_URLS[0]));
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var privateKeys, _i, privateKeys_1, privateKey, account, balance, amountWei, delay, receipt, error_1;
+        var privateKeys, _i, privateKeys_1, privateKey, account, amountWei, delay, receipt, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -81,22 +81,14 @@ function main() {
                     _i = 0, privateKeys_1 = privateKeys;
                     _a.label = 2;
                 case 2:
-                    if (!(_i < privateKeys_1.length)) return [3 /*break*/, 10];
+                    if (!(_i < privateKeys_1.length)) return [3 /*break*/, 9];
                     privateKey = privateKeys_1[_i];
                     account = web3.eth.accounts.privateKeyToAccount(privateKey);
-                    return [4 /*yield*/, web3.eth.getBalance(account.address)];
-                case 3:
-                    balance = _a.sent();
-                    //переходим к след если баланс аккаунта не проходит лимит
-                    if (balance < config_const_1.ETH_AMOUNT.MAX) {
-                        console.log("Restake skiped for privateKey ".concat(account.address, " becuse not enough money. Balance: ").concat(balance, "\n"));
-                        return [3 /*break*/, 9];
-                    }
                     amountWei = (0, general_helper_1.getRandomAmount)(web3, config_const_1.ETH_AMOUNT.MIN, config_const_1.ETH_AMOUNT.MAX);
                     delay = (0, general_helper_1.getRandomDelay)(config_const_1.DELAY.MIN, config_const_1.DELAY.MAX);
-                    _a.label = 4;
-                case 4:
-                    _a.trys.push([4, 6, , 7]);
+                    _a.label = 3;
+                case 3:
+                    _a.trys.push([3, 5, , 6]);
                     return [4 /*yield*/, (0, restake_1.attemptRestake)({
                             rpcUrls: config_const_1.RPC_URLS,
                             currentRpcIndex: 0,
@@ -104,26 +96,26 @@ function main() {
                             amountWei: amountWei,
                             contractAddress: config_const_1.CONTRACT_ADDRESS,
                             contractABI: (0, general_helper_1.getAbiByRelativePath)("abi/abi.json"),
-                            refCode: config_const_1.REF_CODE,
+                            depositAddress: config_const_1.DEPOZIT_CONTRACT_ADDRESS,
                             web3: web3,
                         })];
-                case 5:
+                case 4:
                     receipt = _a.sent();
                     console.log("Transaction successful for account ".concat(account.address, "\n      hash: ").concat(receipt.transactionHash, "\n      amount: ").concat(amountWei, " Wei\n      delay: ").concat(delay, "\n"));
-                    return [3 /*break*/, 7];
-                case 6:
+                    return [3 /*break*/, 6];
+                case 5:
                     error_1 = _a.sent();
                     console.log("Restake ultimately failed for account ".concat(account.address, " with amount ").concat(amountWei, ": ").concat(error_1, "\n"));
-                    return [3 /*break*/, 7];
-                case 7: return [4 /*yield*/, (0, general_helper_1.sleep)(delay)];
-                case 8:
+                    return [3 /*break*/, 6];
+                case 6: return [4 /*yield*/, (0, general_helper_1.sleep)(delay)];
+                case 7:
                     _a.sent();
                     console.log("".concat(delay, " ms delay is over\n"));
-                    _a.label = 9;
-                case 9:
+                    _a.label = 8;
+                case 8:
                     _i++;
                     return [3 /*break*/, 2];
-                case 10: return [2 /*return*/];
+                case 9: return [2 /*return*/];
             }
         });
     });

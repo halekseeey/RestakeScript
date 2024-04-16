@@ -43,25 +43,32 @@ exports.attemptRestake = exports.restake = void 0;
 var web3_1 = __importDefault(require("web3"));
 function restake(_a) {
     return __awaiter(this, arguments, void 0, function (_b) {
-        var account, contract, restakeCall, restakeGas, tx, signedTx, error_1;
+        var account, balance, contract, restakeCall, restakeGas, tx, signedTx, error_1;
         var _c;
-        var privateKey = _b.privateKey, amountWei = _b.amountWei, contractAddress = _b.contractAddress, contractABI = _b.contractABI, refCode = _b.refCode, web3 = _b.web3;
+        var privateKey = _b.privateKey, amountWei = _b.amountWei, contractAddress = _b.contractAddress, contractABI = _b.contractABI, depositAddress = _b.depositAddress, web3 = _b.web3;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
                     account = web3.eth.accounts.privateKeyToAccount(privateKey);
-                    contract = new web3.eth.Contract(contractABI, contractAddress);
-                    _d.label = 1;
+                    return [4 /*yield*/, web3.eth.getBalance(account.address)];
                 case 1:
-                    _d.trys.push([1, 7, , 8]);
-                    return [4 /*yield*/, contract.methods.Deposit(amountWei, refCode)];
+                    balance = _d.sent();
+                    //переходим к след если баланс аккаунта не проходит лимит
+                    if (balance < BigInt(amountWei)) {
+                        throw "Restake skiped for privateKey ".concat(account.address, " becuse not enough money");
+                    }
+                    contract = new web3.eth.Contract(contractABI, contractAddress);
+                    _d.label = 2;
                 case 2:
+                    _d.trys.push([2, 8, , 9]);
+                    return [4 /*yield*/, contract.methods.deposit(depositAddress, amountWei)];
+                case 3:
                     restakeCall = _d.sent();
                     return [4 /*yield*/, restakeCall.estimateGas({
                             from: account.address,
                             value: amountWei,
                         })];
-                case 3:
+                case 4:
                     restakeGas = _d.sent();
                     _c = {
                         from: account.address,
@@ -70,19 +77,19 @@ function restake(_a) {
                         gas: restakeGas.toString()
                     };
                     return [4 /*yield*/, web3.eth.getGasPrice()];
-                case 4:
+                case 5:
                     tx = (_c.gasPrice = (_d.sent()).toString(),
                         _c.data = restakeCall.encodeABI(),
                         _c);
                     return [4 /*yield*/, web3.eth.accounts.signTransaction(tx, privateKey)];
-                case 5:
+                case 6:
                     signedTx = _d.sent();
                     return [4 /*yield*/, web3.eth.sendSignedTransaction(signedTx.rawTransaction)];
-                case 6: return [2 /*return*/, _d.sent()];
-                case 7:
+                case 7: return [2 /*return*/, _d.sent()];
+                case 8:
                     error_1 = _d.sent();
                     throw error_1;
-                case 8: return [2 /*return*/];
+                case 9: return [2 /*return*/];
             }
         });
     });
@@ -90,7 +97,7 @@ function restake(_a) {
 exports.restake = restake;
 var attemptRestake = function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
     var receipt, error_2;
-    var rpcUrls = _b.rpcUrls, _c = _b.currentRpcIndex, currentRpcIndex = _c === void 0 ? 0 : _c, privateKey = _b.privateKey, amountWei = _b.amountWei, contractAddress = _b.contractAddress, contractABI = _b.contractABI, refCode = _b.refCode, web3 = _b.web3;
+    var rpcUrls = _b.rpcUrls, _c = _b.currentRpcIndex, currentRpcIndex = _c === void 0 ? 0 : _c, privateKey = _b.privateKey, amountWei = _b.amountWei, contractAddress = _b.contractAddress, contractABI = _b.contractABI, depositAddress = _b.depositAddress, web3 = _b.web3;
     return __generator(this, function (_d) {
         switch (_d.label) {
             case 0:
@@ -103,7 +110,7 @@ var attemptRestake = function (_a) { return __awaiter(void 0, [_a], void 0, func
                         amountWei: amountWei,
                         contractAddress: contractAddress,
                         contractABI: contractABI,
-                        refCode: refCode,
+                        depositAddress: depositAddress,
                         web3: web3,
                     })];
             case 2:
@@ -119,7 +126,7 @@ var attemptRestake = function (_a) { return __awaiter(void 0, [_a], void 0, func
                         amountWei: amountWei,
                         contractAddress: contractAddress,
                         contractABI: contractABI,
-                        refCode: refCode,
+                        depositAddress: depositAddress,
                         web3: web3,
                     })];
             case 4: 

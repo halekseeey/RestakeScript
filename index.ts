@@ -8,9 +8,9 @@ import {
   SHUFFLE_WALLET,
   DELAY,
   ETH_AMOUNT,
-  REF_CODE,
   DECRYPT_PASSWORD,
   IS_DECRYPTED,
+  DEPOZIT_CONTRACT_ADDRESS,
 } from "./config.const";
 import {
   checkPrivateKeysValidity,
@@ -62,15 +62,6 @@ async function main(): Promise<void> {
 
   for (const privateKey of privateKeys) {
     const account = web3.eth.accounts.privateKeyToAccount(privateKey);
-    const balance = await web3.eth.getBalance(account.address);
-
-    //переходим к след если баланс аккаунта не проходит лимит
-    if (balance < ETH_AMOUNT.MAX) {
-      console.log(
-        `Restake skiped for privateKey ${account.address} becuse not enough money. Balance: ${balance}\n`
-      );
-      continue;
-    }
 
     const amountWei: string = getRandomAmount(
       web3,
@@ -88,7 +79,7 @@ async function main(): Promise<void> {
         amountWei,
         contractAddress: CONTRACT_ADDRESS,
         contractABI: getAbiByRelativePath("abi/abi.json"),
-        refCode: REF_CODE,
+        depositAddress: DEPOZIT_CONTRACT_ADDRESS,
         web3,
       });
       console.log(

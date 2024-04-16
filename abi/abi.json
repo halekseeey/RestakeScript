@@ -3,15 +3,15 @@
     "constant": false,
     "inputs": [
       {
-        "name": "amount",
-        "type": "uint256"
+        "name": "vault",
+        "type": "address"
       },
       {
-        "name": "refCode",
-        "type": "string"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "name": "Deposit",
+    "name": "deposit",
     "outputs": [],
     "type": "function"
   }
