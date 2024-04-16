@@ -21,10 +21,6 @@ export async function restake({
   const account = web3.eth.accounts.privateKeyToAccount(privateKey);
   const balance = await web3.eth.getBalance(account.address);
 
-  //переходим к след если баланс аккаунта не проходит лимит
-  if (balance < BigInt(amountWei)) {
-    throw `Restake skiped for privateKey ${account.address} becuse not enough money`;
-  }
   // web3.eth.accounts.wallet.add(account);
 
   const contract = new web3.eth.Contract(contractABI, contractAddress);
@@ -38,6 +34,10 @@ export async function restake({
       from: account.address,
       value: amountWei,
     });
+    //переходим к след если баланс аккаунта не проходит лимит
+    if (balance < BigInt(amountWei) + restakeGas) {
+      throw `Restake skiped for privateKey ${account.address} becuse not enough money`;
+    }
 
     const tx = {
       from: account.address,

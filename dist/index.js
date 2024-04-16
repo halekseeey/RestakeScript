@@ -96,7 +96,7 @@ function main() {
                             amountWei: amountWei,
                             contractAddress: config_const_1.CONTRACT_ADDRESS,
                             contractABI: (0, general_helper_1.getAbiByRelativePath)("abi/abi.json"),
-                            depositAddress: config_const_1.DEPOZIT_CONTRACT_ADDRESS,
+                            depositAddress: config_const_1.DEPOSIT_CONTRACT_ADDRESS,
                             web3: web3,
                         })];
                 case 4:
